@@ -18,11 +18,10 @@ const LoginPage = () => {
     setLoading(true);
     setError("");
 
-    // Simulate an API call with a delay
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
+      await new Promise((resolve) => setTimeout(resolve, 1000)); 
       if (username === "user" && password === "password") {
-        dispatch(login({ username, rememberMe })); // Pass username and rememberMe to the action
+        dispatch(login({ username, rememberMe })); 
         navigate("/tasks");
       } else {
         setError("Invalid username or password");
