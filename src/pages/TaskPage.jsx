@@ -13,7 +13,7 @@ const TaskPage = () => {
   const [allTodos, setTodos] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [newPriority, setNewPriority] = useState("Medium"); // Default priority
+  const [newPriority, setNewPriority] = useState("Medium"); // priority
 
   // Add a new todo
   const handleAddTodo = () => {
@@ -22,7 +22,7 @@ const TaskPage = () => {
     let newTodoItem = {
       title: newTitle,
       description: newDescription,
-      priority: newPriority, // Include priority
+      priority: newPriority, // priority
     };
 
     let updatedTodoArr = [...allTodos, newTodoItem];
@@ -32,7 +32,7 @@ const TaskPage = () => {
     // Clear input fields
     setNewTitle("");
     setNewDescription("");
-    setNewPriority("Medium"); // Reset priority to default
+    setNewPriority("Medium"); // default priority
   };
 
   // Delete a todo
@@ -44,7 +44,6 @@ const TaskPage = () => {
     setTodos(reducedTodo);
   };
 
-  // Load todos from localStorage on component mount
   useEffect(() => {
     let savedTodo = JSON.parse(localStorage.getItem("todolist"));
     if (savedTodo) {
@@ -52,7 +51,7 @@ const TaskPage = () => {
     }
   }, []);
 
-  // Logout functionality
+  // Logout user
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -60,11 +59,11 @@ const TaskPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header Section */}
-        <header className="flex justify-between items-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-          To-Do List
+        <header className="flex justify-between items-center mb-8">
+          <h1 className="text-5xl font-bold text-gray-900 tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent ">
+            To-Do List
           </h1>
           <button
             onClick={handleLogout}
@@ -75,102 +74,105 @@ const TaskPage = () => {
           </button>
         </header>
 
-        {/* Todo Input Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 mb-10"
-        >
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">Add a New Task</h2>
-          <div className="todo-input space-y-6">
-            <div className="todo-input-item">
-              <label className="block text-lg font-medium text-gray-700 mb-2">Title</label>
-              <input
-                type="text"
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-                placeholder="What's the task title?"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div className="todo-input-item">
-              <label className="block text-lg font-medium text-gray-700 mb-2">Description</label>
-              <input
-                type="text"
-                value={newDescription}
-                onChange={(e) => setNewDescription(e.target.value)}
-                placeholder="What's the task description?"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div className="todo-input-item">
-              <label className="block text-lg font-medium text-gray-700 mb-2">Priority</label>
-              <select
-                value={newPriority}
-                onChange={(e) => setNewPriority(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-            </div>
-            <div className="todo-input-item">
-              <button
-                onClick={handleAddTodo}
-                className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-8 rounded-full hover:from-blue-600 hover:to-indigo-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                aria-label="Add Task"
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Todo List Section */}
-        <section className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">Your Tasks</h2>
-          <div className="todo-list space-y-6">
-            <AnimatePresence>
-              {allTodos.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="todo-list-item flex justify-between items-center p-6 border border-gray-200 rounded-lg hover:shadow-md transition duration-300"
+        {/* Main Content Section */}
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+          {/* Todo Input Section */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 flex-1"
+          >
+            <h2 className="text-3xl font-bold text-gray-800 mb-8">Add a New Task</h2>
+            <div className="todo-input space-y-6">
+              <div className="todo-input-item">
+                <label className="block text-lg font-medium text-gray-700 mb-2">Title</label>
+                <input
+                  type="text"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  placeholder="What's the task title?"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="todo-input-item">
+                <label className="block text-lg font-medium text-gray-700 mb-2">Description</label>
+                <input
+                  type="text"
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
+                  placeholder="What's the task description?"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="todo-input-item">
+                <label className="block text-lg font-medium text-gray-700 mb-2">Priority</label>
+                <select
+                  value={newPriority}
+                  onChange={(e) => setNewPriority(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
-                    <p className="text-gray-600">{item.description}</p>
-                    <div
-                      className={`inline-block mt-2 px-3 py-1 text-sm font-semibold rounded-full ${
-                        item.priority === "High"
-                          ? "bg-red-100 text-red-700"
-                          : item.priority === "Medium"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-green-100 text-green-700"
-                      }`}
-                    >
-                      {item.priority} Priority
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+              <div className="todo-input-item">
+                <button
+                  onClick={handleAddTodo}
+                  className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-8 rounded-full hover:from-blue-600 hover:to-indigo-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-label="Add Task"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* Todo List Section */}
+          <section className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 flex-1">
+            <h2 className="text-3xl font-bold text-gray-800 mb-8">Your Tasks</h2>
+            <div className="todo-list space-y-6 max-h-[600px] overflow-y-auto">
+              <AnimatePresence>
+                {allTodos.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="todo-list-item flex justify-between items-center p-6 border border-gray-200 rounded-lg hover:shadow-md transition duration-300"
+                  >
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
+                      <p className="text-gray-600">{item.description}</p>
+                      <div
+                        className={`inline-block mt-2 px-3 py-1 text-sm font-semibold rounded-full ${
+                          item.priority === "High"
+                            ? "bg-red-100 text-red-700"
+                            : item.priority === "Medium"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
+                        {item.priority} Priority
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => handleDeleteTodo(index)}
-                      className="text-red-500 hover:text-red-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                      aria-label="Delete Task"
-                    >
-                      <AiOutlineDelete size={24} />
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </section>
+                    <div>
+                      <button
+                        onClick={() => handleDeleteTodo(index)}
+                        className="text-red-500 hover:text-red-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                        aria-label="Delete Task"
+                      >
+                        <AiOutlineDelete size={24} />
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );
